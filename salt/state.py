@@ -3018,7 +3018,8 @@ class State(object):
                                 self.rend,
                                 self.opts['renderer'],
                                 self.opts['renderer_blacklist'],
-                                self.opts['renderer_whitelist'])
+                                self.opts['renderer_whitelist'],
+                                jid=self.jid)
         if not high:
             return high
         high, errors = self.render_template(high, template)
@@ -3034,7 +3035,9 @@ class State(object):
                                     self.rend,
                                     self.opts['renderer'],
                                     self.opts['renderer_blacklist'],
-                                    self.opts['renderer_whitelist'])
+                                    self.opts['renderer_whitelist'],
+                                    jid=self.jid
+                                    )
         if not high:
             return high
         high, errors = self.render_template(high, '<template-str>')
@@ -3167,7 +3170,8 @@ class BaseHighState(object):
                         self.state.opts['renderer'],
                         self.state.opts['renderer_blacklist'],
                         self.state.opts['renderer_whitelist'],
-                        saltenv=self.opts['saltenv']
+                        saltenv=self.opts['saltenv'],
+                        jid=self.jid
                     )
                 ]
             else:
@@ -3195,7 +3199,8 @@ class BaseHighState(object):
                             self.state.opts['renderer'],
                             self.state.opts['renderer_blacklist'],
                             self.state.opts['renderer_whitelist'],
-                            saltenv=saltenv
+                            saltenv=saltenv,
+                            jid=self.jid
                         )
                     )
                 else:
@@ -3249,7 +3254,8 @@ class BaseHighState(object):
                                 self.state.opts['renderer'],
                                 self.state.opts['renderer_blacklist'],
                                 self.state.opts['renderer_whitelist'],
-                                saltenv
+                                saltenv,
+                                jid=self.jid
                             )
                         )
                         done[saltenv].append(sls)
@@ -3598,7 +3604,8 @@ class BaseHighState(object):
                                          self.state.opts['renderer_whitelist'],
                                          saltenv,
                                          sls,
-                                         rendered_sls=mods
+                                         rendered_sls=mods,
+                                         jid=self.jid
                                          )
             except SaltRenderError as exc:
                 msg = 'Rendering SLS \'{0}:{1}\' failed: {2}'.format(
@@ -4192,6 +4199,7 @@ class HighState(BaseHighState):
         self.opts = opts
         self.client = salt.fileclient.get_file_client(self.opts)
         BaseHighState.__init__(self, opts)
+        self.jid = jid
         self.state = State(self.opts,
                            pillar_override,
                            jid,
