@@ -172,7 +172,6 @@ def update_record_field(table, sys_id, field, value):
 
         salt myminion servicenow.update_record_field sys_user 2348234 first_name jimmy
     """
-
     client = _get_client()
     client.table = table
     response = client.update({field: value}, sys_id)
