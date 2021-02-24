@@ -173,10 +173,6 @@ def update_record_field(table, sys_id, field, value):
         salt myminion servicenow.update_record_field sys_user 2348234 first_name jimmy
     """
 
-    log.debug('snow: table %s', table)
-    log.debug('snow: sys_id %s', sys_id)
-    log.debug('snow: field %s', field)
-    log.debug('snow: value %s', value)
     client = _get_client()
     client.table = table
     response = client.update({field: value}, sys_id)
@@ -203,9 +199,6 @@ def update_fields(table, sys_id, fields):
         salt myminion servicenow.update_fields sys_user 2348234 fields='{"name":"kevin"}'
     """
 
-    log.debug('snow: table %s', table)
-    log.debug('snow: sys_id %s', sys_id)
-    log.debug('snow: fields %s', fields)
     client = _get_client()
     client.table = table
     response = client.update(fields, sys_id)
